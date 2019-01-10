@@ -63,7 +63,7 @@ Temporary Items
 docs/_book
 
 # TODO: where does this rule come from?
-test/
+# test/
 
 # End of https://www.gitignore.io/api/vue,macos,kotlin
 
