@@ -1,5 +1,6 @@
 package movies
 
+import com.google.gson.GsonBuilder
 import io.ktor.application.*
 import io.ktor.features.CallLogging
 import io.ktor.features.DefaultHeaders
@@ -13,6 +14,25 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.MediaType
 
+
+class MovieSearchResult(val results: List<MovieResult>)
+class MovieResult(val id: Int, val title: String, val poster_path: String, val popularity: Double, val vote_count: Int)
+class Movie(val id: Int, val title: String, val poster_image_url: String, val popularity_summary: String)
+
+
+fun movieResultToMovie(movieResult: MovieResult): Movie {
+    val id: Int = movieResult.id
+    val title: String = movieResult.title
+
+    val base_url = "https://image.tmdb.org/t/p/"
+    val file_size = "w200"
+    val file_path = movieResult.poster_path
+    val poster_image_url: String = base_url + file_size + file_path
+
+    val popularity_summary: String = "${movieResult.popularity} out of ${movieResult.vote_count}"
+
+    return Movie(id, title, poster_image_url, popularity_summary)
+}
 
 fun fetchMovies(title: String?): String {
     val apiKey: String = System.getenv("TMDB_API_KEY") ?: ""
@@ -28,8 +48,14 @@ fun fetchMovies(title: String?): String {
     var responseBody = response?.body()?.string()
     println(responseBody)
 
-    if (responseBody == null) responseBody = "Error retrieving movies"
-    return responseBody
+    val gson = GsonBuilder().create()
+    if (responseBody == null) {
+        return "Error retrieving movies"
+    }
+    
+    val movieSearchResult = gson.fromJson(responseBody, MovieSearchResult::class.java)
+    val movies = movieSearchResult.results.take(10).map { movieResultToMovie(it) }
+    return gson.toJson(movies)
 }
 
 
