@@ -45,9 +45,8 @@ fun fetchMovies(title: String?): String {
 
     val response = client.newCall(request).execute()
     var responseBody = response?.body()?.string()
-    println(responseBody)
-
     val gson = GsonBuilder().create()
+
     if (responseBody == null) {
         return "Error retrieving movies"
     }
