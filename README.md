@@ -1,5 +1,6 @@
 # Movie Search
 ## Running webservice
+* Add an environment variable named TMDB_API_KEY with your TMDB api key as the value
 * Clone or dowload the project
 * In your terminal navigate to the webservice directory
 * Execute "./gradlew run"
