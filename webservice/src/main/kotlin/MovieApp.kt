@@ -11,8 +11,6 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.MediaType
 
 
 class MovieSearchResult(val results: List<MovieResult>)
@@ -52,7 +50,7 @@ fun fetchMovies(title: String?): String {
     if (responseBody == null) {
         return "Error retrieving movies"
     }
-    
+
     val movieSearchResult = gson.fromJson(responseBody, MovieSearchResult::class.java)
     val movies = movieSearchResult.results.take(10).map { movieResultToMovie(it) }
     return gson.toJson(movies)
