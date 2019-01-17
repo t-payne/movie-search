@@ -5,7 +5,9 @@
         <h1>Search Movies</h1>
         <br>
         <form @submit.prevent="submit">
-          <input placeholder="Enter Movie Title" v-model="search" autofocus>
+          <v-text-field v-model="search" label="Enter Movie Title" outline clearable></v-text-field>
+          <br>
+          <v-btn @click="submit">Search</v-btn>
         </form>
       </div>
     </v-flex>
