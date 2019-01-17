@@ -2,6 +2,7 @@ package movies
 
 import com.google.gson.GsonBuilder
 import io.ktor.application.*
+import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.DefaultHeaders
 import io.ktor.http.*
@@ -60,6 +61,9 @@ fun fetchMovies(title: String?): String {
 fun Application.module() {
     install(DefaultHeaders)
     install(CallLogging)
+    install(CORS) {
+        anyHost()
+    }
     routing {
         get("/") {
             call.respondText("Movies App", ContentType.Text.Html)

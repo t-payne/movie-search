@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     submit(event) {
-      alert("Search Initiated");
+      this.$router.push(`results/${this.search}`);
     }
   }
 };
