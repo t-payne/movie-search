@@ -5,8 +5,11 @@
         <v-flex xs12>
           <v-card color="cyan darken-2" class="white--text">
             <v-layout>
-              <v-flex xs5>
+              <v-flex xs5 v-if="!(image.includes('null'))">
                 <v-img :src="image" height="200px" contain></v-img>
+              </v-flex>
+              <v-flex v-else xs5>
+                <v-img src="/default.png" height="200px" contain></v-img>
               </v-flex>
               <v-flex xs7>
                 <v-card-title primary-title>
